@@ -43,14 +43,16 @@ int circ::remove()
 {
     int temp = arr[front];
     if (isEmpty()) {
-        cout << "Circ is Empty" << endl;
+        cout << "Circ is Empty" << endl;return;
     }
-    else {
-        if (front == 0 and rear == 0) {
-            rear = -1, front = -1;
+        if (front == rear) 
+        {// one Element
+            rear = -1, front = -1;return;
         }
-        front++;
-    }
+        if(front == maxsize - 1)
+            front = 0;
+        else
+            front++;
     return temp;
 }
 bool circ::isFull()
