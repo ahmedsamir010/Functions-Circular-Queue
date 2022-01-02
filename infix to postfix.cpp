@@ -1,123 +1,84 @@
 ﻿#include<iostream>
 using namespace std;
 #define maxsize 100
-int top = -1;
-class stack {
+class circ {
 private:
-    int arr[maxsize];
+    int front, rear, arr[maxsize];
 public:
+    circ() { front = -1, rear = -1; }
+    void insert(int value);
+    int remove();
     bool isFull();
     bool isEmpty();
-    void push(int value);
-    int pop();
-    int peek();
     void display();
-    double exp(string x);
 };
-
 int main()
 {
-    stack s;string z;
-    s.push(10);
-    s.push(20);
-    s.push(30);
-    s.push(40);
-    s.push(50);
-    s.display();//10   20   30  40   50
-    s.pop();
-    s.display();
-    cout << "Peek" << s.peek() << endl;
-   // infix to PostFix
-  //  cout<<"Please Enter "
-    cin >> z;
-    cout << s.exp(z);
+    circ c;
+    c.insert(10);
+    c.insert(20);
+    c.display();
+    c.remove();
+    c.display();
     return 0;
 }
 
-bool stack::isFull()
-{
-    if (top == maxsize - 1)return true;
-    return false;
-}
-
-bool stack::isEmpty()
-{
-    if (top == -1)return true;
-    return false;
-}
-
-void stack::push(int value)
+void circ::insert(int value)
 {
     if (isFull()) {
-        cout << "Stack is Over Flow" << endl;
-        exit(-1);
+        cout << "Circ is Full ";
+    }
+    if (front == -1 and rear == -1) {
+        front = 0, rear = 0;
     }
     else {
-        top++;
-        arr[top] = value;
+        if (rear == maxsize - 1)
+            rear = 0;
+        else
+            rear++;
     }
+    arr[rear] = value;
+}
+int circ::remove()
+{
+    int temp = arr[front];
+    if (isEmpty()) {
+        cout << "Circ is Empty" << endl;
+    }
+    else {
+        if (front == 0 and rear == 0) {
+            rear = -1, front = -1;
+        }
+        front++;
+    }
+    return temp;
+}
+bool circ::isFull()
+{
+    if ((front == 0 and rear == maxsize - 1) or (front == rear + 1))return true;
+    return false;
 }
 
-int stack::pop()
+bool circ::isEmpty()
 {
-    if (isEmpty()) {
-        cout << "Stack is Under Flow" << endl;
-    }
-    else {
-        return arr[top--];
-    }
+    if (front = -1 and rear == -1)return true;
+    return false;
 }
 
-int stack::peek()
+void circ::display()
 {
-    if (isEmpty()) {
-        cout << "Stack is Under Flow" << endl;
-    }
-    else {
-        return arr[top];
-    }
-}
-
-void stack::display()
-{
-    if (isEmpty()) {
-        cout << "Stack is Empty" << endl;
-    }
-    else {
-        for (int i = top;i >= 0;i--) {
+    if (front <= rear) {
+        for (int i = front;i <= rear;i++) {
             cout << arr[i] << "\t";
         }
     }
-}
-
-double stack::exp(string x)
-{
-    stack s;float op1, op2, val;
-    for (int i = 0;i < x.size();i++) {
-        if (isdigit(x[i])) {
-            s.push(x[i] - 48);
+    else {
+        for (int i = front;i < maxsize;i++) {
+            cout << arr[i] << "\t";
         }
-        else {
-            op2 = s.pop();
-            op1 = s.pop();
-            switch (x[i]) {
-            case '+':
-                val = op2 + op1;
-                break;
-            case '-':
-                val = op1 - op2;
-                break;
-            case '*':
-                val = op2 * op1;
-                break;
-            case '/':
-                val = op1 / op2;
-                break;
-            case '^':
-                val = pow(op1, op2);
-            }
-            s.push(val);
+        for (int i = 0;i <= rear;i++) {
+            cout << arr[i] << "\t";
         }
     }
-    return s.pop();
+
 }
