@@ -1,4 +1,4 @@
-﻿#include<iostream>
+#include<iostream>
 using namespace std;
 #define maxsize 100
 class circ {
@@ -43,11 +43,11 @@ int circ::remove()
 {
     int temp = arr[front];
     if (isEmpty()) {
-        cout << "Circ is Empty" << endl;return;
+        cout << "Circ is Empty" << endl;exit(-1);
     }
         if (front == rear) 
         {// one Element
-            rear = -1, front = -1;return;
+            rear = -1, front = -1;exit(-1);
         }
         if(front == maxsize - 1)
             front = 0;
@@ -82,5 +82,5 @@ void circ::display()
             cout << arr[i] << "\t";
         }
     }
-
 }
+
